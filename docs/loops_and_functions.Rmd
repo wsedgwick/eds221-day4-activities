@@ -1,0 +1,130 @@
+---
+title: "loops_functions"
+author: "Wade Sedgwick"
+date: '2022-08-11'
+output: html_document
+execute:
+  error: false
+  warning: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(knitr)
+
+```
+
+### Task 1
+
+```{r}
+
+weekdays <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+transects <- c("Transect A", "Transect B", "Transect C")
+
+
+out_matrix <- matrix(nrow = length(weekdays), ncol = length(transects))
+
+for(i in seq_along(weekdays)) {
+  for (j in seq_along(transects)) {
+    val <- print(paste(weekdays[i],"-", transects[j]))
+    out_matrix[i, j] <- val
+  }
+}
+
+```
+
+
+### Task 2 - done
+
+```{r}
+
+force <- function(mass, acceleration) {
+  force_val <- mass * acceleration
+  print(paste("The resulting force is", force_val, "Newtons"))
+}
+
+force(2, 5)
+
+
+```
+
+
+### Task 3
+
+```{r}
+
+sci_name <- c("Chanos Chanos", "Sphyraena barracuda", "Caranx ignobilis")
+common_name <- c("Milkfish", "Great barracuda", "Giant trevally")
+a_est <- c(0.0905, 0.0181, 0.0353)
+b_est <- c(2.52, 3.27, 3.05)
+
+
+
+
+
+
+fish_parms <- data.frame(sci_name, common_name, a_est, b_est)
+
+fish_weight <- function(fish_name, tot_length) {
+  my_sub <- filter(fish_parms, common_name == fish_name)
+   weight <- a_est * tot_length ^ b_est
+  print(paste("The weight is", weight))
+}
+
+
+
+fish_weight(fish_name = "Milkfish", tot_length = 2)
+fish_weight(fish_name = "Giant trevally", tot_length = 5)
+
+vector_100 <- seq(1, 100, 1)
+
+
+milkfish_weights <- fish_weight(fish_name = "Milkfish", tot_length = vector_100)
+
+
+
+```
+
+### Task 4 - done
+
+```{r}
+
+wave_power <- function(wave_height, wave_period) {
+  value_1 <- 0.5 * (wave_height ^ 2) * wave_period
+  return(value_1)
+}
+
+x = wave_power(wave_height = 3, wave_period = 3)
+
+
+wave_height_seq <- seq(0, 3, 0.2)
+
+wave_power(wave_height = wave_height_seq, wave_period = 8)
+
+```
+
+### Task 5
+
+```{r}
+
+  
+wave_power_depth <- function(wave_depth, wave_height_2, wave_period_2) {
+  if (wave_depth > 12) {
+    print(wave_power(wave_height = wave_height_2, wave_period = wave_period_2))
+    message("The deep water equation was used.")
+    } else {
+    p_shallow <- 0.81 * (wave_height_2 ^ 2) * wave_period_2
+    print(p_shallow)
+    message("The shallow water equation was used.")
+    }
+}
+
+wave_power_depth(wave_depth = 13, wave_height_2 = 2, wave_period_2 = 4)
+wave_power_depth(wave_depth = 11, wave_height_2 = 2, wave_period_2 = 4)
+
+
+
+```
+
